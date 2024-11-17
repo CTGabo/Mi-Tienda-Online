@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "NODE_ENV=production vite build",
-    "lint": "eslint .",
+    "build": "vite build",
+    "vercel-build": "vite build",
     "preview": "vite preview",
     "start": "node server/server.js"
 },

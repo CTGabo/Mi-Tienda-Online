@@ -18,10 +18,13 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: [
-    'https://mi-tienda-online-4ip7gyv04-gabriel-silvas-projects-384ee268.vercel.app/',
+    'https://mi-tienda-online.vercel.app',
+    'https://mi-tienda-online-4ip7gyv04-gabriel-silvas-projects-384ee268.vercel.app',
     'http://localhost:5173'
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
