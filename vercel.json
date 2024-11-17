@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "^/api/(.*)",
-      "dest": "mi-tienda-online-delta.vercel.app/api/$1"
+      "dest": "mi-tienda-online-production.up.railway.app/api/$1"
     },
     {
       "src": "^/assets/(.*)",
