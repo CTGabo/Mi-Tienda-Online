@@ -1,13 +1,11 @@
 import express from 'express';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
+import { register, login, getCurrentUser } from '../controllers/authController.js';
 import auth from '../middleware/auth.js';
 
 const router = express.Router();
 
-// Asegúrate de que las funciones register y login existan en authController
 router.post('/register', register);
 router.post('/login', login);
+router.get('/me', auth, getCurrentUser);
 
-module.exports = router;
+export default router;

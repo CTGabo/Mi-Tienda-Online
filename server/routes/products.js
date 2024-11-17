@@ -87,4 +87,4 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

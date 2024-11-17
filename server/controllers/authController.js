@@ -1,6 +1,6 @@
-const User = require('../models/User');
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcryptjs'); // Asegúrate de importar bcryptjs
+import User from '../models/User.js';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcryptjs';
 
 // Función para generar el token JWT
 const generateToken = (id) => {
@@ -9,12 +9,10 @@ const generateToken = (id) => {
   });
 };
 
-// Controlador de registro
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
-    // Validación básica
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -22,7 +20,6 @@ exports.register = async (req, res) => {
       });
     }
 
-    // Verificar si el usuario ya existe
     const userExists = await User.findOne({ email });
     if (userExists) {
       return res.status(400).json({
@@ -31,17 +28,14 @@ exports.register = async (req, res) => {
       });
     }
 
-    // Crear el usuario
     const user = await User.create({
       name,
       email,
       password
     });
 
-    // Generar token
     const token = generateToken(user._id);
 
-    // Enviar respuesta exitosa
     res.status(201).json({
       success: true,
       data: {
@@ -63,7 +57,7 @@ exports.register = async (req, res) => {
 };
 
 // Controlador de login
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -118,7 +112,7 @@ exports.login = async (req, res) => {
 };
 
 // Opcional: Obtener usuario actual
-exports.getCurrentUser = async (req, res) => {
+export const getCurrentUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id);
     res.json({
