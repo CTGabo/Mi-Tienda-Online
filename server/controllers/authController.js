@@ -13,10 +13,25 @@ export const register = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    // Validación mejorada
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Por favor, complete todos los campos'
+        message: 'Por favor, complete todos los campos',
+        details: {
+          name: !name ? 'Nombre es requerido' : null,
+          email: !email ? 'Email es requerido' : null,
+          password: !password ? 'Contraseña es requerida' : null
+        }
+      });
+    }
+
+    // Validar formato de email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Formato de email inválido'
       });
     }
 
@@ -48,10 +63,11 @@ export const register = async (req, res) => {
     });
 
   } catch (error) {
-    console.error('Error en registro:', error);
+    console.error('Error detallado en registro:', error);
     res.status(500).json({
       success: false,
-      message: 'Error al registrar usuario'
+      message: 'Error al registrar usuario',
+      details: error.message
     });
   }
 };
