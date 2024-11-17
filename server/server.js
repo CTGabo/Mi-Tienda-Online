@@ -18,23 +18,16 @@ const app = express();
 // Configuración CORS actualizada
 const allowedOrigins = [
   'https://mi-tienda-online.vercel.app',
-  'https://mi-tienda-online-6bolo13pk-gabriel-silvas-projects-384ee268.vercel.app',
+  'https://mi-tienda-online-6bo1oi3pk-gabriel-silvas-projects-384ee268.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000'
 ];
 
 app.use(cors({
-  origin: function(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      console.log('Origen bloqueado por CORS:', origin);
-      callback(new Error('No permitido por CORS'));
-    }
-  },
+  origin: '*',  // Temporalmente para debug
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin']
 }));
 
 app.use(express.json());

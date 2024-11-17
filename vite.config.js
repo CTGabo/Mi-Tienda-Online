@@ -7,9 +7,9 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'https://mi-tienda-online-6bo1oi3pk-gabriel-silvas-projects-384ee268.vercel.app',
         changeOrigin: true,
-        secure: false
+        secure: true,
       }
     }
   },
