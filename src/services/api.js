@@ -1,12 +1,13 @@
 import axios from 'axios';
 
-const API_URL = 'https://mi-tienda-online-6bo1oi3pk-gabriel-silvas-projects-384ee268.vercel.app/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 export const api = axios.create({
   baseURL: API_URL,
-  withCredentials: true,
+  withCredentials: false,
   headers: {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
   }
 });
 

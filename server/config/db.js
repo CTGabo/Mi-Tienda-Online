@@ -7,18 +7,9 @@ const connectDB = async () => {
     if (!mongoURI) {
       throw new Error('La variable de entorno MONGODB_URI no está definida');
     }
-
-    // Validar formato de URL
-    if (!mongoURI.includes('@') || !mongoURI.includes('mongodb+srv://')) {
-      throw new Error('Formato de URL de MongoDB inválido');
-    }
-
-    console.log('Intentando conectar a MongoDB...');
-    console.log('URL de MongoDB (ofuscada):', 
-      mongoURI.replace(/:([^@]+)@/, ':****@'));
     
     await mongoose.connect(mongoURI, {
-      dbName: 'mi-tienda-online' // Nombre específico de la base de datos
+      dbName: 'mi-tienda-online'
     });
     
     console.log('MongoDB conectado exitosamente');
