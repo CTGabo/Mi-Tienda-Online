@@ -8,18 +8,18 @@ const connectDB = async () => {
       throw new Error('La variable de entorno MONGODB_URI no está definida');
     }
 
-    console.log('Intentando conectar a MongoDB...');
+    console.log('URL de MongoDB (ofuscada):', 
+      mongoURI.replace(/:([^@]+)@/, ':****@'));
     
-    await mongoose.connect(mongoURI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(mongoURI);
     
     console.log('MongoDB conectado exitosamente');
     console.log('Base de datos:', mongoose.connection.name);
     console.log('Host:', mongoose.connection.host);
+    console.log('Puerto:', mongoose.connection.port);
+    console.log('Usuario:', mongoose.connection.user);
   } catch (err) {
-    console.error('Error de conexión MongoDB:', err.message);
+    console.error('Error detallado de conexión:', err);
     process.exit(1);
   }
 };

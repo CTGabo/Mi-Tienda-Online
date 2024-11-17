@@ -67,10 +67,16 @@ app.use((err, req, res, next) => {
 
 // Manejo de errores global
 app.use((err, req, res, next) => {
-  console.error('Error:', err);
+  console.error('Error detallado:', {
+    message: err.message,
+    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+  });
+  
   res.status(500).json({
     success: false,
-    message: err.message || 'Error interno del servidor'
+    message: process.env.NODE_ENV === 'production' 
+      ? 'Error interno del servidor'
+      : err.message
   });
 });
 
