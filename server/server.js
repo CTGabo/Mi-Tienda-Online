@@ -8,36 +8,54 @@ import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/products.js';
 
+dotenv.config();
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-dotenv.config();
-
 const app = express();
 
-// Middleware
+// Configuración CORS actualizada
+const allowedOrigins = [
+  'https://mi-tienda-online.vercel.app',
+  'https://mi-tienda-online-4ip7gyv04-gabriel-silvas-projects-384ee268.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000'
+];
+
 app.use(cors({
-  origin: [
-    'https://mi-tienda-online.vercel.app',
-    'https://mi-tienda-online-4ip7gyv04-gabriel-silvas-projects-384ee268.vercel.app',
-    'http://localhost:5173'
-  ],
+  origin: function(origin, callback) {
+    // Permitir solicitudes sin origen (como aplicaciones móviles o Postman)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      console.log('Origen bloqueado por CORS:', origin);
+      callback(new Error('No permitido por CORS'));
+    }
+  },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/// Conectar a MongoDB
-connectDB()
-.then(() => {
-  console.log('Conexión a MongoDB establecida');
-})
-.catch((err) => {
-  console.error('Error al conectar con MongoDB:', err);
-  process.exit(1);
+// Middleware para logging de solicitudes
+app.use((req, res, next) => {
+  console.log(`${req.method} ${req.path} - Origin: ${req.get('origin')}`);
+  next();
 });
+
+// Conectar a MongoDB
+connectDB()
+  .then(() => console.log('Conexión a MongoDB establecida'))
+  .catch((err) => {
+    console.error('Error al conectar con MongoDB:', err);
+    process.exit(1);
+  });
 
 // Rutas
 app.use('/api/auth', authRoutes);
@@ -84,4 +102,5 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
+  console.log('Orígenes permitidos:', allowedOrigins);
 });
