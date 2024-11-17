@@ -16,12 +16,12 @@ const __dirname = dirname(__filename);
 const app = express();
 
 // Configuración CORS actualizada
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  'http://localhost:5173',
-  'http://localhost:3000',
-  'https://mi-tienda-online-delta.vercel.app'
-];
+app.use(cors({
+  origin: true, // Permite todos los orígenes durante desarrollo
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Origin']
+}));
 
 app.use(cors({
   origin: function(origin, callback) {
