@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "NODE_ENV=production vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "start": "node server/server.js"
-  },
+},
   "dependencies": {
     "@headlessui/react": "^2.2.0",
     "@stripe/stripe-js": "^4.9.0",
@@ -39,6 +39,8 @@
   "devDependencies": {
     "@eslint/js": "^9.13.0",
     "@heroicons/react": "^2.1.5",
+    "@rollup/rollup-linux-x64-gnu": "^4.9.0",
+
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^4.3.3",
