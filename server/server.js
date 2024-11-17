@@ -18,21 +18,18 @@ const app = express();
 // Configuración CORS actualizada
 const allowedOrigins = [
   'https://mi-tienda-online.vercel.app',
-  'https://mi-tienda-online-4ip7gyv04-gabriel-silvas-projects-384ee268.vercel.app',
+  'https://mi-tienda-online-777prz89-gabriel-silvas-projects-384ee268.vercel.app',
   'http://localhost:5173',
   'http://localhost:3000'
 ];
 
 app.use(cors({
   origin: function(origin, callback) {
-    // Permitir solicitudes sin origen (como aplicaciones móviles o Postman)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.includes(origin)) {
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
       console.log('Origen bloqueado por CORS:', origin);
-      callback(new Error('No permitido por CORS'));
+      callback(null, false);
     }
   },
   credentials: true,
