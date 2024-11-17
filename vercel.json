@@ -2,14 +2,22 @@
   "version": 2,
   "builds": [
     {
-      "src": "server/server.js",
-      "use": "@vercel/node"
+      "src": "package.json",
+      "use": "@vercel/static-build"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "server/server.js"
+      "src": "^/api/(.*)",
+      "dest": "mi-tienda-online-delta.vercel.app/api/$1"
+    },
+    {
+      "src": "^/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": ".*",
+      "dest": "/index.html"
     }
   ]
 }
