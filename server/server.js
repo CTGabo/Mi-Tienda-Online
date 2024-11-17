@@ -41,6 +41,11 @@ app.use((req, res, next) => {
   next();
 });
 
+// Rutas
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
+app.use('/uploads', express.static(join(__dirname, 'uploads')));
+
 // Conectar a MongoDB
 connectDB()
   .then(() => console.log('Conexión a MongoDB establecida'))
@@ -48,11 +53,6 @@ connectDB()
     console.error('Error al conectar con MongoDB:', err);
     process.exit(1);
   });
-
-// Rutas
-app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/uploads', express.static(join(__dirname, 'uploads')));
 
 // Manejo de errores de Multer
 app.use((err, req, res, next) => {
