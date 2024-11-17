@@ -4,19 +4,9 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 5173,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        secure: false
-      }
-    }
+    port: 5173
   },
   build: {
-    outDir: 'dist',
-    rollupOptions: {
-      external: ['@rollup/rollup-linux-x64-gnu']
-    }
+    outDir: 'dist'
   }
-})
+});
