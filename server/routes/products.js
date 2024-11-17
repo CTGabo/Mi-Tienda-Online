@@ -1,10 +1,11 @@
-const express = require('express');
+import express from 'express';
+import Product from '../models/Product.js';
+import auth from '../middleware/auth.js';
+import upload from '../middleware/uploadMiddleware.js';
+import cloudinary from '../config/cloudinary.js';
+import fs from 'fs';
+
 const router = express.Router();
-const Product = require('../models/Product');
-const auth = require('../middleware/auth');
-const upload = require('../middleware/uploadMiddleware');
-const cloudinary = require('../config/cloudinary');
-const fs = require('fs'); // Añadir esta importación
 
 // Obtener todos los productos
 router.get('/', async (req, res) => {
@@ -16,7 +17,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Obtener un producto por ID
+/// Obtener un producto por ID
 router.get('/:id', async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);

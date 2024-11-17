@@ -1,8 +1,12 @@
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-// Crear directorio de uploads si no existe
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const uploadDir = 'uploads/';
 if (!fs.existsSync(uploadDir)) {
   fs.mkdirSync(uploadDir);
@@ -32,4 +36,4 @@ const upload = multer({
   }
 });
 
-module.exports = upload;
+export default upload;

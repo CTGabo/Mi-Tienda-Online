@@ -1,11 +1,17 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/db');
-const authRoutes = require('./routes/authRoutes');
-const productRoutes = require('./routes/products');
-const multer = require('multer');
-const path = require('path');
+import dotenv from 'dotenv';
+import express from 'express';
+import cors from 'cors';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import multer from 'multer';
+import connectDB from './config/db.js';
+import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/products.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+dotenv.config();
 
 const app = express();
 
@@ -20,20 +26,20 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Conectar a MongoDB
+/// Conectar a MongoDB
 connectDB()
-  .then(() => {
-    console.log('Conexión a MongoDB establecida');
-  })
-  .catch((err) => {
-    console.error('Error al conectar con MongoDB:', err);
-    process.exit(1);
-  });
+.then(() => {
+  console.log('Conexión a MongoDB establecida');
+})
+.catch((err) => {
+  console.error('Error al conectar con MongoDB:', err);
+  process.exit(1);
+});
 
 // Rutas
 app.use('/api/auth', authRoutes);
 app.use('/api/products', productRoutes);
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(join(__dirname, 'uploads')));
 
 // Manejo de errores de Multer
 app.use((err, req, res, next) => {
@@ -65,7 +71,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const PORT = process.env.PORT || 3000; // Cambiado de process.env.PORT || 5000 a 3000
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en puerto ${PORT}`);
