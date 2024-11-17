@@ -37,7 +37,13 @@ app.use(express.urlencoded({ extended: true }));
 
 // Middleware para logging de solicitudes
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path} - Origin: ${req.get('origin')}`);
+  console.log({
+    method: req.method,
+    path: req.path,
+    body: req.body,
+    headers: req.headers,
+    url: req.originalUrl
+  });
   next();
 });
 

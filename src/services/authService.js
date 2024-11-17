@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://mi-tienda-online-production.up.railway.app/api/auth';
-export const authService = {
+const API_URL = `${import.meta.env.VITE_API_URL}/auth` || 'http://localhost:3000/api/auth';export const authService = {
   register: async (userData) => {
     try {
       console.log('Intentando registrar con URL:', API_URL);
