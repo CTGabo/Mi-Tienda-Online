@@ -12,7 +12,7 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: [
-    'https://tu-app-vercel.vercel.app',
+    'https://mi-tienda-online-4ip7gyv04-gabriel-silvas-projects-384ee268.vercel.app/',
     'http://localhost:5173'
   ],
   credentials: true
